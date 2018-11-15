@@ -1,3 +1,3 @@
 # watchdog-test
-Watchdog for processes
-Tests how to restart killed processes
+Watchdog monitor for processes
+Tests how to monitor and restart killed processes
