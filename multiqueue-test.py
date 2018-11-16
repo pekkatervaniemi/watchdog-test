@@ -21,13 +21,13 @@ try:
     f = open(conffile)
     f.close()
 except FileNotFoundError:
-    print('Config file', f , 'does not existst.')
+    print('Config file does not exist.')
 
 sshkey = config.get('KEY', 'key_filename')
 sshuser = config.get('KEY', 'username')
 jobit = config.get('STORAGEARRAYS', 'arrays').split()
-tgtsrv = config.get('TRANS', 'host ')
-tgtport = int(config.get('TRANS', 'port '))
+tgtsrv = config.get('TRANS', 'host')
+tgtport = int(config.get('TRANS', 'port'))
 
 #data to telegraf
 def datapusher(purkki):
