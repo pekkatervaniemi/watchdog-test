@@ -3,6 +3,22 @@ import random
 import os
 from multiprocessing import Process
 
+conffile = 'config.conf'
+
+config = configparser.ConfigParser()
+config.read(conffile)
+
+try:
+    f = open(conffile)
+    f.close()
+except FileNotFoundError:
+    print('Config file', f , 'does not existst.')
+
+sshkey = config.get('KEY', 'key_filename')
+sshuser = config.get('KEY', 'username')
+jobit = config.get('STORAGEARRAYS', 'arrays').split()
+
+
 
 def workkeri(workker):
     while True:
@@ -14,7 +30,7 @@ def workkeri(workker):
 if __name__ == '__main__':
 
     procs = []
-    jobit = ["stor1", "stor2", "stor3", "stor4", "stor5"]
+    #jobit = ["stor1", "stor2", "stor3", "stor4", "stor5"]
     for jobi in jobit:
         luku = jobi
         workker = "thread-" + luku
