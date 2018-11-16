@@ -3,7 +3,6 @@ import random
 import os
 from multiprocessing import Process
 import multiprocessing
-import random
 import string
 import socket
 import paramiko
