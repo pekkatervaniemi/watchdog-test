@@ -2,6 +2,16 @@ import time
 import random
 import os
 from multiprocessing import Process
+import multiprocessing
+import random
+import string
+import socket
+import paramiko
+import base64
+import configparser
+import glob
+from io import StringIO
+
 
 conffile = 'config.conf'
 
@@ -17,9 +27,38 @@ except FileNotFoundError:
 sshkey = config.get('KEY', 'key_filename')
 sshuser = config.get('KEY', 'username')
 jobit = config.get('STORAGEARRAYS', 'arrays').split()
+tgtsrv = config.get('TRANS', 'host ')
+tgtport = int(config.get('TRANS', 'port '))
+
+#data to telegraf
+def datapusher(purkki):
+
+        client = paramiko.SSHClient()
+        client.load_system_host_keys()
+        client.set_missing_host_key_policy(paramiko.WarningPolicy)
+        client.connect(purkki, username=sshuser, key_filename=sshkey)
+        stdin, stdout, stderr = client.exec_command('statvlun -hostsum -csvtable -nohdtot -d 20')
 
 
+        for line in stdout:
 
+                if not line:
+                        #time.sleep(10)
+                        print("perse" + purkki)
+
+                else:
+
+                        message = locationlabel(purkki) + line.rstrip()
+
+                        datasender(message)
+                        #print(purkki)
+                        time.sleep(.001)
+
+
+        client.close()
+
+        
+#test workker
 def workkeri(workker):
     while True:
         satunnaisuus = random.randint(1, 5)
