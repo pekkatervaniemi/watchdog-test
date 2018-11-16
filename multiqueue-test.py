@@ -6,7 +6,7 @@ from multiprocessing import Process
 
 def workkeri(workker):
     while True:
-        satunnaisuus = random.randint(1, 1)
+        satunnaisuus = random.randint(1, 5)
         print("workker-name" , workker, "os-pid ", os.getpid(), proc)
         time.sleep(satunnaisuus)
 
