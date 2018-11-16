@@ -14,7 +14,6 @@ from io import StringIO
 
 
 conffile = 'config.conf'
-
 config = configparser.ConfigParser()
 config.read(conffile)
 
@@ -32,29 +31,22 @@ tgtport = int(config.get('TRANS', 'port '))
 
 #data to telegraf
 def datapusher(purkki):
-
         client = paramiko.SSHClient()
         client.load_system_host_keys()
         client.set_missing_host_key_policy(paramiko.WarningPolicy)
         client.connect(purkki, username=sshuser, key_filename=sshkey)
         stdin, stdout, stderr = client.exec_command('statvlun -hostsum -csvtable -nohdtot -d 20')
 
-
         for line in stdout:
 
                 if not line:
                         #time.sleep(10)
                         print("perse" + purkki)
-
                 else:
-
                         message = locationlabel(purkki) + line.rstrip()
-
                         datasender(message)
                         #print(purkki)
                         time.sleep(.001)
-
-
         client.close()
 
         
@@ -72,7 +64,7 @@ if __name__ == '__main__':
     #jobit = ["stor1", "stor2", "stor3", "stor4", "stor5"]
     for jobi in jobit:
         luku = jobi
-        workker = "thread-" + luku
+        workker = jobi
         proc = Process(target=workkeri, args=(workker,))
         procs.append(proc)
         proc.start()
@@ -92,7 +84,7 @@ if __name__ == '__main__':
                 print("Ei elossa", procs[duuni].is_alive())
                 time.sleep(1)
                 print("Start new workker")
-                workker = "thread-" + jobit[duuni]
+                workker = jobi
                 procs.remove(procs[duuni])
                 proc = Process(target=workkeri, args=(workker,))
                 procs.append(proc)
