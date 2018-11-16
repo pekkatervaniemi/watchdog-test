@@ -28,6 +28,17 @@ jobit = config.get('STORAGEARRAYS', 'arrays').split()
 tgtsrv = config.get('TRANS', 'host')
 tgtport = int(config.get('TRANS', 'port'))
 
+def locationlabel(workker):
+    #telegraf influx prometheus labels here
+    if workker == "storage1":
+        alku = "Label1,Label2," + workker + ","
+        return alku
+    if workker == "storage2":
+        alku = "Label1,Label4," + workker + ","
+        return alku
+     return alku
+
+
 def datasender(message):
     host = tgtsrv
     port = tgtport
@@ -35,7 +46,6 @@ def datasender(message):
     mySocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     mySocket.connect((host, port))
     mySocket.sendall(message.encode())
-
 
 
 #data to telegraf
