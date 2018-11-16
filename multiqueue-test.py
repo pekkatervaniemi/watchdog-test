@@ -28,6 +28,16 @@ jobit = config.get('STORAGEARRAYS', 'arrays').split()
 tgtsrv = config.get('TRANS', 'host')
 tgtport = int(config.get('TRANS', 'port'))
 
+def datasender(message):
+    host = tgtsrv
+    port = tgtport
+
+    mySocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    mySocket.connect((host, port))
+    mySocket.sendall(message.encode())
+
+
+
 #data to telegraf
 def datapusher(purkki):
         client = paramiko.SSHClient()
